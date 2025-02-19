@@ -53,7 +53,7 @@ app.post('/sentiment', async (req, res) => {
     } catch (error) {
         logger.error(`Error performing sentiment analysis: ${error}`);
         // Task 7: if there is an error, return a HTTP code of 500 and the json {'message': 'Error performing sentiment analysis'}
-        res.json({ message: 'Error performing sentiment analysis' });
+        res.status(500).json({ message: 'Error performing sentiment analysis' });
     }
 });
 
