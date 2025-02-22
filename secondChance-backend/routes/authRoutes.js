@@ -75,8 +75,8 @@ router.post('/login', async (req, res) => {
             };
             const userName = theUser.firstName;
             const userEmail = theUser.email;
-            //Create JWT authentication if passwords match
-            const authtoken = jwt.sign(payload, JWT_SECRET);
+            //Create authentication if passwords match
+            const authtoken = webtoken.sign(payload, SECRET);
             logger.info('User logged in successfully');
             return res.status(200).json({ authtoken, userName, userEmail });
         //Send appropriate message if user not found
@@ -122,13 +122,13 @@ router.put('/update', async (req, res) => {
             { $set: existingUser },
             { returnDocument: 'after' }
         );
-        //Task 7: Create JWT authentication with user._id as payload using secret key from .env file
+        //Task 7: Create authentication with user._id as payload using secret key from .env file
         const payload = {
             user: {
                 id: updatedUser._id.toString(),
             },
         };
-        const authtoken = jwt.sign(payload, JWT_SECRET);
+        const authtoken = webtoken.sign(payload, SECRET);
         logger.info('User updated successfully');
         res.json({ authtoken });
     } catch (error) {
